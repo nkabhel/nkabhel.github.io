@@ -38,13 +38,24 @@
             <th>%Err</th>
         </tr>
         <template x-for="tap in taps">
-        <tr>
+        <tr x-data="{
+            std: getStd(tap), 
+            min:getMin(tap), 
+            max:getMax(tap), 
+            meas:'',
+            getErr(){
+                return 100*(1-(this.meas/this.std));
+            },
+            getErrClass(){
+                return (this.getErr() > -0.5 && this.getErr() < 0.5) ? 'pass' : 'fail';
+            }
+        }">
             <td x-text="tap"></td>
-            <td x-text="getMin(tap).toFixed(2)"></td>
-            <td x-text="getStd(tap).toFixed(2)"></td>
-            <td x-text="getMax(tap).toFixed(2)"></td>
-            <td><input type="number" /></td>
-            <td></td>
+            <td x-text="min.toFixed(2)"></td>
+            <td x-text="std.toFixed(2)"></td>
+            <td x-text="max.toFixed(2)"></td>
+            <td><input type="number" x-model="meas" step=".01"/></td>
+            <td x-text="getErr().toFixed(2)" :class="getErrClass()"></td>
         </tr>
     </template>
     </table>

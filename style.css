@@ -14,4 +14,14 @@ input,select{
     outline: none;
     border: none;
     width: 95%;
+    text-align: center;
+}
+
+.fail{
+    background: red;
+    color: yellow;
+}
+.pass{
+    background: green;
+    color: yellow;
 }
